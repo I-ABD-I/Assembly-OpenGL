@@ -7,10 +7,11 @@ extern mouseCoords :POINT
 extern w :dword
 extern h :dword
 .code
-; ***********************************
-;			DrawGLScene
-;	draws the scene on the window
-;************************************
+	;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+	;│			DrawGLScene				│ 
+	;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+	;│	Draws The Scene On the Window	│   
+	;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 DrawGLScene proc
 
 	local _width :QWORD 

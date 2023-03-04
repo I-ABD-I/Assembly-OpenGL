@@ -58,13 +58,16 @@ mov lpzCmdLine, eax
 invoke WinMain, hInstance, null, lpzCmdLine, SW_SHOWDEFAULT 
 invoke ExitProcess, eax
 
-;╔══════════════════════════════════════════╗
-;║				ReSizeGLScene				║
-;║			changes the viewport			║
-;║ @param _width the width of the window	║
-;║ @param _height the height of the window	║
-;║ @return void								║
-;╚══════════════════════════════════════════╝
+
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│				ReSizeGLScene				│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│			changes the viewport			│ 
+;│	@param _width the width of the window	│ 
+;│	@param _height the height of the window	│ 
+;│	@return void							│ 
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
+
 ReSizeGLScene proc _width :dword, _height: dword
 ;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
 ;│		same as doing		│
@@ -83,10 +86,13 @@ invoke glViewport, 0, 0, _width, _height
 ret
 ReSizeGLScene endp
 
-;╔══════════════════════════════════════════╗
-;║					InitGL					║
-;║  initialsing all the stuff for open gl	║	
-;╚══════════════════════════════════════════╝
+
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│					InitGL					│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│	initialsing all the stuff for open gl	│  
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
+
 InitGL proc
 
 invoke glShadeModel, GL_SMOOTH
@@ -104,10 +110,11 @@ ret
 InitGL endp
 
 
-;╔══════════════════════════════════════════╗
-;║				KillGLWindow				║
-;║		trys to kill the rendering conext	║
-;╚══════════════════════════════════════════╝
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│				KillGLWindow				│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│		trys to kill the rendering conext	│  
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 
 KillGLWindow proc
 
@@ -143,15 +150,19 @@ KillGLWindow proc
 .endif
 ret
 KillGLWindow endp
-;╔══════════════════════════════════════════════════════╗
-;║					CreateGlWindow						║
-;║	Creates a Window with OpenGL rendering context		║
-;║		@param _title a string for the title			║
-;║		@param _width the width of the window			║
-;║		@param _height the height of the window			║
-;║		@param bits the bit depth of the window			║
-;║		@returns true if window creation was succsusful	║
-;╚══════════════════════════════════════════════════════╝
+
+
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│					CreateGlWindow						│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│	Creates a Window with OpenGL rendering context		│ 
+;│		@param _title a string for the title			│ 
+;│		@param _width the width of the window			│ 
+;│		@param _height the height of the window			│
+;│		@param bits the bit depth of the window			│ 
+;│		@returns true if window creation was succsusful	│ 
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
+
 CreateGLWindow proc _title :DWORD,
 					_width :DWORD,
 					_height :DWORD,
@@ -332,6 +343,19 @@ CreateGLWindow proc _title :DWORD,
 	ret
 CreateGLWindow endp
 
+
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│					WinMain					│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│	The Entry Point of The Windows App		│ 
+;│	This is Where we Create the window		│ 
+;│	And deal with window messages			│ 
+;│	@param hInst hInstance					│ 
+;│	@param hPrevInst hPreviousInstance		│ 
+;│	@param szCmdLine command line params	│
+;│	@param nShowCmd Window Show State		│  
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
+
 WinMain proc hInst :HINSTANCE,
 			 hPrevInst :HINSTANCE,
 			 szCmdLine :LPSTR,
@@ -345,32 +369,38 @@ WinMain proc hInst :HINSTANCE,
 	;├⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯┤
 	;│ push ebp					│
 	;│ mov ebp,esp				│
-	;│ equ						│
-	;│ equ						│
-	;│ sub esp,					│
+	;│ hInst equ 8				│
+	;│ hPrevInst equ 12			│
+	;│ szCmdLine equ 16			│
+	;│ nShowCmd equ 20			│
+	;│ msg equ SIZEOF MSG		│
+	;│ done equ	msg + 1			│
+	;│ sub esp,	done			│
 	;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 	mov done, false
 
+	; call our create window function
 	invoke CreateGLWindow,chr$("My Window"), 1280, 720, 16
 	.if !eax
 		xor eax, eax
 		ret
 	.endif
 
+	; while not done check for messages
 	.while !done
 		invoke PeekMessage, addr msg, null, 0, 0, PM_REMOVE
 		.if eax
-			.if msg.message == WM_QUIT
+			.if msg.message == WM_QUIT ; if message is quit done = true
 				mov done, true
-			.else
+			.else ; else continue
 				invoke TranslateMessage, addr msg
 				invoke DispatchMessage, addr msg
 			.endif
-		.else
-			.if isActive
-				.if keys + VK_ESCAPE
+		.else ; if no msg
+			.if isActive ; if window active
+				.if keys + VK_ESCAPE ; if esc key pressed
 					mov done, true
-				.else
+				.else ; else draw scene
 					invoke DrawGLScene
 					invoke SwapBuffers, hDC
 				.endif
@@ -383,31 +413,46 @@ WinMain proc hInst :HINSTANCE,
 	ret
 WinMain endp
 
+
+;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
+;│				WndProc					│ 
+;┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+;│	This is where we deal with messages	│ 
+;│	@param hwnd window handle			│ 
+;│	@param uMsg message for window		│ 
+;│	@param wParam additional msg info	│ 
+;│	@param lParam additional msg info	│ 
+;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
+
 WndProc proc hwnd :HWND,
 			 uMsg :UINT,
 			 wParam :WPARAM,
 			 lParam :LPARAM
 
-	local himask :WORD
-	local lomask :WORD
+	local himask :WORD ; a mask to get hiparam
+	local lomask :WORD ; a mask to get loparam
 	
 	;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
 	;│		same as doing		│
 	;├⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯┤
 	;│ push ebp					│
 	;│ mov ebp,esp				│
-	;│ equ						│
-	;│ equ						│
-	;│ sub esp,					│
+	;│ hwnd equ	8				│
+	;│ uMsg equ	12				│
+	;│ wParam equ 16			│
+	;│ lParam equ 20			│
+	;│ himask equ 4				│
+	;│ lomask equ himask+4		│
+	;│ sub esp,lomask			│
 	;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 
-	.if uMsg == WM_CLOSE
+	.if uMsg == WM_CLOSE ; if msg = close quit
 
 		invoke PostQuitMessage, 0
 
 		xor eax,eax
 		ret
-	.elseif uMsg == WM_LBUTTONDOWN
+	.elseif uMsg == WM_LBUTTONDOWN ; if left button clicked get save mouse coords
 		
 		mov eax, lParam
 		mov ebx, eax
@@ -417,11 +462,11 @@ WndProc proc hwnd :HWND,
 		mov mouseCoords.x, eax
 		mov mouseCoords.y, ebx
 
-		printf("x: %d, y: %d\n", mouseCoords.x, mouseCoords.y)
+		printf("x: %d, y: %d\n", mouseCoords.x, mouseCoords.y) ; print mouse coords (for debugging)
 		xor eax, eax
 		ret
 
-	.elseif uMsg == WM_ACTIVATE
+	.elseif uMsg == WM_ACTIVATE ; if window is active (showing) set active to ture
 		mov eax, wParam
 		mov lomask, ax
 		shr eax, 16
@@ -439,19 +484,19 @@ WndProc proc hwnd :HWND,
 			xor eax, eax
 			ret
 		.endif
-	.elseif uMsg == WM_KEYDOWN
+	.elseif uMsg == WM_KEYDOWN ; if key pressed
 		mov ebx, offset keys
 		add ebx, wParam
 		mov byte ptr [ebx], true
 		xor eax, eax
 		ret
-	.elseif uMsg == WM_KEYUP
+	.elseif uMsg == WM_KEYUP ; if key unpressed
 		mov ebx, offset keys
 		add ebx, wParam
 		mov byte ptr [ebx], false
 		xor eax, eax
 		ret
-	.elseif uMsg == WM_SIZE
+	.elseif uMsg == WM_SIZE ; if size change
 		mov eax, lParam
 		mov lomask, ax
 		shr eax, 16
@@ -467,7 +512,7 @@ WndProc proc hwnd :HWND,
 		ret
 	.endif
 
-	invoke	DefWindowProc, hwnd, uMsg, wParam, lParam 
+	invoke	DefWindowProc, hwnd, uMsg, wParam, lParam ; if none of the messegaes return defwindowproc a
 	ret
 WndProc endp
 
