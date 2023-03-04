@@ -227,7 +227,7 @@ CreateGLWindow proc _title :DWORD,
 	sub eax, rect.left
 
 	mov ebx, rect.bottom
-	sub ebx, rect.
+	sub ebx, rect.top
 	or dwStyle, WS_CLIPSIBLINGS or WS_CLIPCHILDREN
 	; create the window
 	invoke CreateWindowEx, dwExStyle, chr$("OpenGL"), _title, dwStyle,
