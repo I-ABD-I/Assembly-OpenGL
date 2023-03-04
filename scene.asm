@@ -6,6 +6,11 @@ public DrawGLScene
 extern mouseCoords :POINT
 extern w :dword
 extern h :dword
+
+glPrint proto c :dword, :VARARG
+TitleScreen proto
+BuildFont proto :DWORD, :DWORD, :DWORD
+
 .code
 	;╭⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╮
 	;│			DrawGLScene				│ 
@@ -13,7 +18,11 @@ extern h :dword
 	;│	Draws The Scene On the Window	│   
 	;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 DrawGLScene proc
+invoke TitleScreen
+DrawGLScene endp
 
+
+TitleScreen proc
 	local _width :QWORD 
 	local _height :QWORD
 
@@ -43,15 +52,13 @@ invoke glOrtho, FP8(0.0), _width, _height, FP8(0.0) ,FP8(-1.0), FP8(1.0)
 invoke glMatrixMode, GL_MODELVIEW
 invoke glLoadIdentity
 
-invoke glPointSize, FP4(10.0) ; change point size to 10
-invoke glColor3f, FP4(0.5), FP4(1.0), FP4(0.0) ; change color
-; draw a point where mouse is pressed
-invoke glBegin, GL_POINTS 
-invoke glVertex2i, mouseCoords.x, mouseCoords.y
-invoke glEnd
-invoke glFlush
-mov eax, true
-ret
-DrawGLScene endp
+invoke glRasterPos2i, 100, 100
+invoke glPrint, chr$("Welcome")
 
+invoke glRasterPos2i, 200, 200
+invoke BuildFont, chr$("sans-serif"), 100, 900
+invoke glPrint, chr$("TEST")
+
+ret
+TitleScreen endp
 end
