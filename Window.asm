@@ -26,8 +26,10 @@ ENDM
 WinMain proto :HINSTANCE, :HINSTANCE, :LPSTR, :DWORD
 WndProc proto :HWND, :UINT, :WPARAM, :LPARAM
 DrawGLScene proto
+BuildFont proto :DWORD, :DWORD, :DWORD
+KillGLFont proto
 
-public mouseCoords, w, h
+public mouseCoords, w, h, hDC
 
 .data 
 ; data for opengl and win32
@@ -46,6 +48,8 @@ h dword 720 ; window width
 isActive BOOLEAN ? ; isActive - true if window is selected 
 
 keys BOOLEAN 256 dup(?) ; an arrray for key presses
+
+
 .code
 
 start:
@@ -105,6 +109,8 @@ invoke glDepthFunc, GL_LEQUAL
 
 invoke glHint, GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST
 
+invoke BuildFont, chr$("Courier"), 50, 900
+
 mov eax, true
 ret
 InitGL endp
@@ -147,6 +153,8 @@ KillGLWindow proc
 		invoke MessageBox, null, chr$("Could Not Unregister Class."), chr$("SHUTDOWN ERROR"), MB_OK or MB_ICONINFORMATION
 		mov hInstance, null
 	.endif
+
+	invoke KillGLFont
 .endif
 ret
 KillGLWindow endp
@@ -512,7 +520,7 @@ WndProc proc hwnd :HWND,
 		ret
 	.endif
 
-	invoke	DefWindowProc, hwnd, uMsg, wParam, lParam ; if none of the messegaes return defwindowproc a
+	invoke	DefWindowProc, hwnd, uMsg, wParam, lParam ; if none of the messegaes return defwindowproc
 	ret
 WndProc endp
 
