@@ -67,7 +67,7 @@ mov hInstance, eax
 invoke GetCommandLine
 mov lpzCmdLine, eax
 
-; invoke PlaySound, chr$("RiseUp-tfr.wav"), null, SND_LOOP or SND_ASYNC
+invoke PlaySound, chr$("RiseUp-tfr.wav"), null, SND_LOOP or SND_ASYNC
 invoke WinMain, hInstance, null, lpzCmdLine, SW_SHOWDEFAULT 
 invoke ExitProcess, eax
 
