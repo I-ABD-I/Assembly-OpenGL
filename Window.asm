@@ -1,5 +1,6 @@
 include ..\..\..\..\..\masm32\include\masm32rt.inc
 include ..\..\..\..\..\masm32\include\opengl32.inc
+include ..\..\..\..\..\masm32\include\winmm.inc
 
 
 includelib \masm32\lib\opengl32.lib
@@ -22,14 +23,18 @@ LOCAL txtname
     EXITM <OFFSET txtname>
 ENDM
 
+
 ; function defines
 WinMain proto :HINSTANCE, :HINSTANCE, :LPSTR, :DWORD
 WndProc proto :HWND, :UINT, :WPARAM, :LPARAM
 DrawGLScene proto
 BuildFont proto :DWORD, :DWORD, :DWORD
 KillGLFont proto
+Barrier proto :BYTE, :BYTE, :BYTE, :DWORD, :DWORD, :DWORD, :DWORD
 
-public mouseCoords, w, h, hDC
+public mouseCoords, w, h, hDC, mode, mousePressed
+
+extern xRotation :REAL4, yRotation :REAL4, xSpeed :REAL4, ySpeed :REAL4
 
 .data 
 ; data for opengl and win32
@@ -46,6 +51,9 @@ w dword 1280 ; window height
 h dword 720 ; window width
 
 isActive BOOLEAN ? ; isActive - true if window is selected 
+mousePressed BOOLEAN ?
+
+mode BYTE 0
 
 keys BOOLEAN 256 dup(?) ; an arrray for key presses
 
@@ -59,6 +67,7 @@ mov hInstance, eax
 invoke GetCommandLine
 mov lpzCmdLine, eax
 
+invoke PlaySound, chr$("RiseUp-tfr.wav"), null, SND_LOOP or SND_ASYNC
 invoke WinMain, hInstance, null, lpzCmdLine, SW_SHOWDEFAULT 
 invoke ExitProcess, eax
 
@@ -98,7 +107,6 @@ ReSizeGLScene endp
 ;╰⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯╯
 
 InitGL proc
-
 invoke glShadeModel, GL_SMOOTH
 
 invoke glClearColor, FP4(0.0), FP4(0.0), FP4(0.0), FP4(0.0)
@@ -109,7 +117,7 @@ invoke glDepthFunc, GL_LEQUAL
 
 invoke glHint, GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST
 
-invoke BuildFont, chr$("Courier"), 50, 900
+invoke BuildFont, chr$("sans-serif"), 100, 900
 
 mov eax, true
 ret
@@ -408,14 +416,66 @@ WinMain proc hInst :HINSTANCE,
 			.if isActive ; if window active
 				.if keys + VK_ESCAPE ; if esc key pressed
 					mov done, true
+					
+				.elseif keys + VK_UP
+					fld yRotation
+					fsub FP4(3.0)
+					fstp yRotation
+					mov keys + VK_UP, false
+
+				.elseif keys + VK_DOWN
+					fld yRotation
+					fadd FP4(3.0)
+					fstp yRotation
+					mov keys + VK_DOWN, false
+
+				.elseif keys + VK_LEFT
+					fld xRotation
+					fsub FP4(3.0)
+					fstp xRotation
+					mov keys + VK_LEFT, false
+
+				.elseif keys + VK_RIGHT
+					fld xRotation
+					fadd FP4(3.0)
+					fstp xRotation
+					mov keys + VK_RIGHT, false
+
+				.elseif keys + "W"
+					fld ySpeed
+					fsub FP4(0.01)
+					fstp ySpeed
+					mov keys + "W", false
+
+				.elseif keys + "S"
+					fld ySpeed
+					fadd FP4(0.01)
+					fstp ySpeed
+					mov keys + "S", false
+
+				.elseif keys + "A"
+					fld xSpeed
+					fsub FP4(0.01)
+					fstp xSpeed
+					mov keys + "A", false
+
+				.elseif keys + "D"
+					fld xSpeed
+					fadd FP4(0.01)
+					fstp xSpeed
+					mov keys + "D", false
+
 				.else ; else draw scene
+					invoke glClear, GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT
+					invoke glLoadIdentity
 					invoke DrawGLScene
 					invoke SwapBuffers, hDC
+
+					mov mousePressed, false
 				.endif
 			.endif
 		.endif
 	.endw
-		
 	invoke KillGLWindow
 	mov eax, msg.wParam
 	ret
@@ -460,17 +520,23 @@ WndProc proc hwnd :HWND,
 
 		xor eax,eax
 		ret
-	.elseif uMsg == WM_LBUTTONDOWN ; if left button clicked get save mouse coords
-		
+
+	.elseif uMsg == WM_MOUSEMOVE
 		mov eax, lParam
-		mov ebx, eax
-		and eax, 0ffffh
-		shr ebx, 16
+		mov lomask, ax
+		shr eax, 16
+		mov himask,ax
 
+		movsx eax,lomask
 		mov mouseCoords.x, eax
-		mov mouseCoords.y, ebx
+		movsx eax, himask
+		mov mouseCoords.y, eax
 
-		printf("x: %d, y: %d\n", mouseCoords.x, mouseCoords.y) ; print mouse coords (for debugging)
+		xor eax,eax
+		ret
+
+	.elseif uMsg == WM_LBUTTONDOWN ; if left button clicked get save mouse coords
+		mov mousePressed, true
 		xor eax, eax
 		ret
 

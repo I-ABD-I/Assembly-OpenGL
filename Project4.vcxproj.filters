@@ -42,9 +42,27 @@
     <None Include="..\..\..\..\..\masm32\macros\macros.asm">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="myStuff.inc">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\masm32\include\gdi32.inc">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="scene.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Fonts.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Diamond.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Pyramid.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Box.asm">
       <Filter>Source Files</Filter>
     </MASM>
     <MASM Include="Window.asm">
@@ -53,5 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="comments.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="RiseUp-tfr.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

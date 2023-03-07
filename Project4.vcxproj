@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;msvcrt.lib;glu32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,11 +141,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <MASM Include="Window.asm" />
+    <MASM Include="Box.asm" />
+    <MASM Include="Diamond.asm" />
+    <MASM Include="Fonts.asm" />
+    <MASM Include="Pyramid.asm" />
+    <MASM Include="Window.asm">
+      <FileType>Document</FileType>
+    </MASM>
+    <None Include="..\..\..\..\..\masm32\include\gdi32.inc" />
     <None Include="..\..\..\..\..\masm32\macros\macros.asm">
       <FileType>Document</FileType>
     </None>
     <MASM Include="scene.asm" />
+    <None Include="myStuff.inc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\masm32\include\glaux.inc" />
@@ -159,6 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="comments.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="RiseUp-tfr.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
